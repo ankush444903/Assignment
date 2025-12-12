@@ -24,16 +24,46 @@ copy .env.example .env
 3. (Optional) Scrape official pages to populate `data/cleaned`:
 
 ```powershell
+# Loan Product Assistant — Bank of Maharashtra (RAG PoC)
+
+## Project Overview & Goal
+This repository contains a proof-of-concept Retrieval-Augmented Generation (RAG) pipeline to answer questions about Bank of Maharashtra loan products. The system scrapes loan pages, consolidates cleaned text, builds a FAISS semantic index, and answers user questions by retrieving relevant chunks and invoking an LLM.
+
+## Quick Start
+1. Create and activate a virtual environment (Windows PowerShell):
+
+```powershell
+python -m venv .venv
+.\.venv\Scripts\Activate.ps1
+pip install -r requirements.txt
+```
+
+2. (Optional) Install additional community helpers (if you use LangChain patterns):
+
+```powershell
+pip install langchain langchain-community
+```
+
+3. Copy `.env.example` to `.env` and set `OPENAI_API_KEY` (or other provider credentials):
+
+```powershell
+copy .env.example .env
+# then edit .env in an editor and add your OPENAI_API_KEY
+```
+
+4. (Optional) Scrape official pages to populate `data/cleaned`:
+
+```powershell
 python -m src.webscraping.webscraping
 ```
 
-4. Create embeddings / FAISS index:
+5. Create embeddings / FAISS index:
 
 ```powershell
 python src/processing/"Chunking & FAISS Indexing.py"
 ```
 
-5. Run the interactive assistant:
+6. Run the interactive assistant:
 
 ```powershell
 python main.py
@@ -49,10 +79,10 @@ python main.py
 - `requests`, `beautifulsoup4`: robust, minimal web scraping stack.
 - `python-dotenv`: simple environment config loading.
 - `faiss-cpu`: fast vector similarity search locally.
-- `openai` (or other provider) + `langchain*` helpers: to generate embeddings and call the LLM.
+- `openai` (or other provider) + `langchain` helpers: to generate embeddings and call the LLM.
 - `logging` (stdlib): structured logs for observability and debugging.
 
-Note: The repository uses some `langchain_*` packages in code. If you prefer, replace with stable `langchain` primitives or the provider SDK you use.
+Note: The repository mentions some `langchain` helper patterns. If you encounter import errors, install `langchain` and `langchain-community` or adjust the code to use the provider SDK directly.
 
 ## Data Strategy & Chunking
 - The pipeline first scrapes pages, cleans noise (headers, footers, scripts), extracts tables and text segments, and saves a single cleaned `.txt` per page.
@@ -78,7 +108,7 @@ Note: The repository uses some `langchain_*` packages in code. If you prefer, re
 
 ## Challenges and Notes
 - Some Bank of Maharashtra pages may have dynamic content or JS-driven elements; the current scrapers use `requests` and `BeautifulSoup` so they only work for server-rendered HTML.
-- The code references `langchain_*` helper packages. If you encounter import errors, prefer installing `langchain`, `openai`, and `langchain-community` or adjust the code to use the provider SDK directly.
+- The code references some `langchain` helpers. If you encounter import errors, prefer installing `langchain`, `openai`, and `langchain-community` or adjust the code to use the provider SDK directly.
 
 ## Potential Improvements
 - Add unit tests for parsing and retrieval components.

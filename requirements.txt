@@ -10,5 +10,6 @@ nltk==3.9.2
 flask==2.3.2
 gunicorn==21.2.0
 
-# Optional / recommended for LangChain-based helpers (install if needed):
-# pip install langchain langchain-openai langchain-community langchain-experimental
+langchain
+langchain-community
+
