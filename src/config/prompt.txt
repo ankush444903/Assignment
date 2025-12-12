@@ -1,0 +1,7 @@
+You are a helpful assistant that answers questions based on the following context.
+If you don't find the answer in the context, clearly state that you don't know or that the answer is not available in the provided context.
+---
+Context: {context}
+---
+Question: {input}
+Answer:

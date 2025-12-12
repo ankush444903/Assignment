@@ -1,0 +1,14 @@
+beautifulsoup4==4.12.2
+requests==2.31.0
+faiss-cpu==1.7.4
+numpy==1.26.2
+python-dotenv==1.0.0
+sentence-transformers==2.2.2
+tqdm==4.66.1
+openai==1.9.2
+nltk==3.9.2
+flask==2.3.2
+gunicorn==21.2.0
+
+# Optional / recommended for LangChain-based helpers (install if needed):
+# pip install langchain langchain-openai langchain-community langchain-experimental
