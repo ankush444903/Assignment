@@ -14,7 +14,7 @@ try:
     logger = logging.getLogger(__name__)
     logger.info("Chunking/indexing run; logfile=%s", logfile)
 except Exception:
-    # Fallback when running the script directly
+
     from pathlib import Path
     from datetime import datetime
     def _setup_local():
@@ -33,7 +33,6 @@ except Exception:
     logger = logging.getLogger(__name__)
     logger.info("Chunking/indexing run (fallback); logfile=%s", logfile)
 
-# --- Configuration ---
 REPO_ROOT = os.path.abspath(os.path.join(os.path.dirname(__file__), "..", ".."))
 INPUT_FOLDER = os.getenv("CLEANED_FOLDER", os.path.join(REPO_ROOT, "data", "cleaned"))
 OUTPUT_FOLDER = os.getenv("EMBEDDING_FOLDER", os.path.join(REPO_ROOT, "data", "embedding"))
@@ -62,13 +61,13 @@ try:
 except Exception:
     logger.info("Vectorstore not found. Creating new one...")
 
-    # 1. Load Documents
+
     logger.info("Loading all .txt files from: %s", INPUT_FOLDER)
     loader = DirectoryLoader(path=INPUT_FOLDER, glob="**/*.txt", loader_kwargs={"autodetect_encoding": True})
     raw_documents = loader.load()
     logger.info("Successfully loaded %d raw document(s).", len(raw_documents))
 
-    # 2. Semantic Chunking
+
     logger.info("Applying Semantic Chunking...")
     all_text = "\n\n".join([doc.page_content for doc in raw_documents])
 
@@ -81,7 +80,6 @@ except Exception:
     semantic_chunks = text_splitter.create_documents([all_text])
     logger.info("Original text split into %d semantic chunks.", len(semantic_chunks))
 
-    # 3. Create and save FAISS vectorstore
     logger.info("Creating FAISS index...")
     vectorstore = FAISS.from_documents(documents=semantic_chunks, embedding=embeddings)
     vectorstore.save_local(folder_path=OUTPUT_FOLDER, index_name=FAISS_INDEX_NAME)

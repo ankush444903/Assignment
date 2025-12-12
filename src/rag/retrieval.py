@@ -72,7 +72,7 @@ if vectorstore is not None and llm is not None:
 
     prompt = ChatPromptTemplate.from_template(template)
 
-    # Setup RAG pipeline (The main chain, initialized once)
+
     RAG_CHAIN = ({"context": retriever, "input": RunnablePassthrough()} | prompt | llm | StrOutputParser())
 
 

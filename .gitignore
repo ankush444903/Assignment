@@ -5,8 +5,5 @@ __pycache__/
 data/raw_pages/*.html
 data/index/*
 *.sqlite3
-# FAISS index and embeddings (optional; remove if you want to track indexes)
 data/embedding/
-
-# Logs
 *.log
