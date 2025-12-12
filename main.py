@@ -34,6 +34,7 @@ def main():
 
         logger.info("Running RAG query")
         logger.debug("Query: %s", query)
+        # reduce console noise: RAG start is debug-level
 
         # Call the RAG function from the other file
         response = get_rag_response(query)

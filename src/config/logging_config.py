@@ -6,10 +6,6 @@ import os
 
 
 def setup_logging(level: str = None, base_log_dir: str = None):
-    """Configure root logger to write to a dated folder under `src/logs/YYYY-MM-DD/`.
-
-    Returns the path to the created log file.
-    """
     if level is None:
         level = os.getenv("LOG_LEVEL", "INFO")
 
@@ -44,5 +40,12 @@ def setup_logging(level: str = None, base_log_dir: str = None):
         fh.setLevel(getattr(logging, level.upper(), logging.INFO))
         fh.setFormatter(logging.Formatter("%(asctime)s %(levelname)s %(name)s - %(message)s"))
         root.addHandler(fh)
+
+        # Silence or reduce third-party noisy loggers at INFO
+        logging.getLogger("httpx").setLevel(logging.WARNING)
+        logging.getLogger("openai").setLevel(logging.WARNING)
+        logging.getLogger("langchain").setLevel(logging.WARNING)
+        logging.getLogger("langchain_core").setLevel(logging.WARNING)
+        logging.getLogger("langchain_openai").setLevel(logging.WARNING)
 
     return str(logfile)
